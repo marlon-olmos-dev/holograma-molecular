@@ -1,0 +1,247 @@
+/*Reset y base*/
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/*Paleta holografica*/
+:root {
+    --negro: #000000;
+    --profundo: #030a0f;
+    --cian: #00e5ff;
+    --cian-tenue: #00e5ff55;
+    --cyan-glow: #00e5ff22;
+    --violeta: #b94fff;
+    --blanco-suave: #e8f4f8;
+    --texto-silenciado: #4a7a8a;
+
+    /*Dimensiones del holograma*/
+    --view-size: 160px;
+    --gap: 4px;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: var(--negro);
+    color: var(--blanco-suave);
+    font-family: 'Courier New', 'SF Mono', 'Consolas', monospace;
+    -webkit-font-smoothing: antialiased;
+}
+
+/*Controles superiores*/
+#ui {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 12px 16px 10px;
+    background: linear-gradient(to bottom, #000000ee, #00000000);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+/*Datos de la molecula*/
+#molecula-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+#molecula-formula {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--cian);
+    text-shadow: 0 0 12px var(--cian), 0 0 28px var(--cian-tenue);
+    line-height: 1;
+}
+
+#molecula-nombre {
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--texto-silenciado);
+}
+
+/*Fila de controles*/
+#controles {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    width: 100%;
+    max-width: 340px;
+}
+
+.select-wrapper {
+    flex: 1;
+    position: relative;
+}
+
+.select-wrapper::after {
+    content: '▾';
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--cian);
+    pointer-events: none;
+    font-size: 0.75rem;
+}
+
+#molecula-select {
+    width: 100%;
+    appearance: none;
+    background: #050f14;
+    border: 1px solid var(--cian-tenue);
+    border-radius: 6px;
+    color: var(--blanco-suave);
+    font-family: inherit;
+    font-size: 0.72rem;
+    padding: 7px 28px 7px 10px;
+    cursor: pointer;
+    letter-spacing: 0.04em;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+#molecula-select:focus {
+    border-color: var(--cian);
+    box-shadow: 0 0 8px var(--cian-tenue);
+}
+
+#molecula-select option {
+    background: #050f14;
+}
+
+
+/*CONTENEDOR HOLOGRAFICO*/
+#holograma-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: grid;
+    grid-template-columns: var(--view-size) var(--view-size);
+    grid-template-rows: var(--view-size) var(--view-size);
+    gap: var(--gap);
+    width: calc(var(--view-size) * 2 + var(--gap));
+    height: calc(var(--view-size) * 2 + var(--gap));
+}
+
+/*Cada vista ocupa una celda del grid*/
+.holograma-view {
+    width: var(--view-size);
+    height: var(--view-size);
+    overflow: hidden;
+    position: relative;
+}
+
+/*Canvas dentro de cada vista: 100% del contenedor*/
+.holograma-view canvas {
+    width: 100% !important;
+    height: 100% !important;
+    display: block;
+}
+
+
+/*POSICION Y ROTACION DE CADA VISTA*/
+
+/*Vista superior*/
+#view-top {
+    grid-column: 1;
+    grid-row: 1;
+    transform: rotate(180deg);
+    box-shadow: inset -2px -2px 0 0 var(--cian-tenue);
+}
+
+/*Vista izquierda*/
+#view-left {
+    grid-column: 1;
+    grid-row: 2;
+    transform: rotate(90deg);
+    box-shadow: inset -2px 2px 0 0 var(--cian-tenue);
+}
+
+/*Vista derecha*/
+#view-right {
+    grid-column: 2;
+    grid-row: 1;
+    transform: rotate(-90deg);
+    box-shadow: inset 2px -2px 0 0 var(--cian-tenue);
+}
+
+/*Vista inferior*/
+#view-bottom {
+    grid-column: 2;
+    grid-row: 2;
+    transform: rotate(0deg);
+    box-shadow: inset 2px 2px 0 0 var(--cian-tenue);
+}
+
+
+/*PUNTO CENTRAL - INDICADOR DE CONVERGENCIA*/
+#holograma-container::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 6px;
+    height: 6px;
+    background: var(--cian);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 8px var(--cian), 0 0 20px var(--cian);
+    z-index: 10;
+    pointer-events: none;
+}
+
+/*RESPONSIVO*/
+@media (min-width: 480px) {
+    :root {
+        --view-size: 200px;
+    }
+    #molecula-formula { font-size: 2.5rem; }
+    #ui {padding: 16px 24px 12px; }
+}
+
+@media (min-width: 768px) {
+    :root {
+        --view-size: 260px;
+    }
+    #molecula-formula { font-size: 2.5rem; }
+    #ui { padding: 16px 24px 12px; }
+}
+
+/*ANIMACION DE PARPADEO HOLOGRAFICO*/
+@keyframes holoPulse {
+    0%, 100% { opacity: 1; }
+    50%         { opacity: 0.92; }
+}
+
+#holograma-container {
+    animation: holoPulse 3s ease-in-out infinite;
+}
+
+/*Linea de escaneo holografico*/
+#holograma-container::before {
+    content: '';
+    position: absolute;
+    inset: -20px;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 3px,
+        rgba(0, 229, 255, 0.015) 3px,
+        rgba(0, 229, 255, 0.015) 4px
+    );
+    pointer-events: none;
+    z-index: 5;
+    border-radius: 2px;
+}

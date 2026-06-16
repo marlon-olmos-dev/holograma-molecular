@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Holograma molecular 3D</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!--====== INTERFAZ DE CONTROL ======-->
+    <div id="ui">
+        <!--Encabezado con nombre de la molecula-->
+        <div id="molecula-info">
+            <span id="molecula-formula">H2O</span>
+            <span id="molecula-nombre">Agua</span>
+        </div>
+
+        <!--Controles-->
+        <div id="controles">
+            <!--Selector de molecula-->
+            <div class="select-wrapper">
+                <select id="molecula-select">
+                    <option value="water">Agua (H2O)</option>
+                    <option value="co2">Dioxido de carbono (CO2)</option>
+                    <option value="methane">Metano (CH4)</option>
+                    <option value="ammonia">Amoniaco (NH3)</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!--=====CONTENEDOR DEL HOLOGRAMA-->
+    <div id="holograma-container">
+        <!--Vista superior-->
+        <div class="holograma-view" id="view-top">
+            <canvas id="canvas-top"></canvas>
+        </div>
+
+        <!--Vista izquierda-->
+        <div class="holograma-view" id="view-left">
+            <canvas id="canvas-left"></canvas>
+        </div>
+
+        <!--Vista derecha-->
+        <div class="holograma-view" id="view-right">
+            <canvas id="canvas-right"></canvas>
+        </div>
+
+        <!--Vista inferior-->
+        <div class="holograma-view" id="view-bottom">
+            <canvas id="canvas-bottom"></canvas>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
